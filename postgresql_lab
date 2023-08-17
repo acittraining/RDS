@@ -1,0 +1,593 @@
+
+https://github.com/ACloudGuru-Resources/Course-Certified-Solutions-Architect-Associate/blob/master/labs/creating-a-static-website-using-amazon-s3/index.html
+
+https://github.com/ACloudGuru-Resources/S3BucketsLabFiles
+
+
+mysqldump -u root -p ec2db > ec2db.sql
+mysql -h <replace-rds-end-point-here> -P 3306 -u rdsuser -p rdsdb < ec2db.sql [-h = hostname<rds endpoint>]
+mysql -h <replace-rds-end-point-here> -P 3306 -u rdsuser -p
+USE rdsdb
+SELECT * FROM table1;
+
+
+
+
+mysql -h demo-database1-rds.c1tw6t3q6eoc.us-east-1.rds.amazonaws.com -P 3306 -u rdsuser -p rdsdb < ec2db.sql
+
+
+
+AWS RDS Aurora Demo
+
+
+Master username: postgres
+
+Master password: 
+
+Endpoint: myacitdb.cluster-c1tw6t3q6eoc.us-east-1.rds.amazonaws.com
+psql -h myacitdb.cluster-c1tw6t3q6eoc.us-east-1.rds.amazonaws.com --port=5432 --username=postgres --password --dbname=myacitdb
+
+
+========================== RDS Tutorial ==============
+
+===> installing postgres on ubuntu 
+https://ubuntu.com/server/docs/databases-postgresql
+https://www.postgresql.org/download/linux/ubuntu/
+
+======================================== postgresql tutorial =========================================
+
+https://www.tutorialsteacher.com/postgresql/update-data
+https://www.tutorialspoint.com/postgresql/postgresql_update_query.htm
+https://www.postgresql.org/docs/8.0/sql-createuser.html
+
+==> Connecting to a database 
+sudo -u postgres psql customer 
+
+==> Add a user to postgres
+CREATE USER davide WITH PASSWORD 'jw8s0F4';
+
+Create a user with a password that is valid until the end of 2004. After one second has ticked in 2005, the password is no longer valid.
+
+CREATE USER miriam WITH PASSWORD 'jw8s0F4' VALID UNTIL '2005-01-01';
+
+===================================================== Creating Databases ===================================
+
+
+Syntax
+CREATE DATABASE databasename;
+CREATE DATABASE customer
+
+CREATE DATABASE employee_id;
+\l 
+\c employee_id      [connecting to a database ] 
+
+
+=========================== Droping or Deleting a DB ============================
+
+==> Syntax  
+
+DROP DATABASE database_name;
+DROP DATABASE  employee; 
+
+=============================================== Table ==========================================
+
+==> Table is an arrangement of information or data, typically in rows and columns
+==> Operations that can be done with tables
+     --> CREATE TABLE
+	 --> ALTER TABLE
+	 --> INSERT
+	 --> SELECT 
+	 --> UPDATE
+	 --> DROP TABLE 
+	 
+
+
+================================ CREATE TABLE =================================
+
+==> SYNTAX 
+
+CREATE TABLE tablename(column_name|datatype |,column_name2 datatype2,......,column_namen  datypen);
+CREATE TABLE emp(id int, name varchar); 
+
+CREATE TABLE customer_details(id BIGSERIAL,first_name varchar(50),last_name varchar,gender varchar,email varchar);
+CREATE TABLE employee(id int,name varchar,firstname varchar, lastname varchar,phone varchar,email varchar);
+
+
+students=>
+students=> CREATE TABLE person (
+students(> id BIGSERIAL NOT  NULL PRIMARY KEY,
+students(> first_name VARCHAR(50) NOT NULL,
+students(> last_name VARCHAR(50) NOT NULL,
+students(> gender VARCHAR(7) NOT NULL,
+students(> date_of_birth DATE NOT NULL,
+students(> email  VARCHAR(150) );
+
+\d    [list available tables] 
+\d person  [ This will show the table person that was created] 
+
+================ Inserting Records into tables ===============================================
+
+==> SYNTAX
+
+INSERT INTO tablename(column_name1,column_name2,.....column_namen)
+VALUES(value1,value2,...value3);
+
+
+                              OR
+INSERT INTO tablename VALUES(value1,value2,....value3);
+insert into customer_details values(7,'Emmanuel','Ebong Kode','Male','ekode@acittrainingsolutions.com');
+
+
+==> Example
+INSERT INTO emp(id,name) VALUES(1,'clovis');
+
+                          OR
+						
+INSERT INTO emp VALUES(1,'Clovis');
+
+
+
+INSERT INTO person (first_name, last_name, gender,  date_of_birth,email)
+VALUES ('Blossom', 'Bame', 'Female', DATE '2003-01-03', 'blossombame@gmail.com');
+
+========= Retrieving Data from table =====================
+
+SELECT * FROM person; 
+
+===================================== SELECT ====================================
+
+==> SYNTAX
+
+SELECT COLUMN(S) FROM table_name; 
+
+==> EXAMPLE 
+
+SELECT id,first_name FROM customer_details;
+SELECT id,firstname,lastname,phone,email FROM employee;
+
+SELECT * FROM employee WHERE id=5;
+
+================================ DELECT RECORD ===================================
+
+==> SYNTAX 
+
+DELETE FROM table_name
+
+WHERE condition; 
+
+==> Example
+
+DELETE FROM employee WHERE id=10;
+
+=================================== Update =======================================
+
+
+
+==> used to update values in a table
+==> SET will activate the changes
+
+==> SYNTAX 
+
+UPDATE tablename 
+SET column1 = value1,
+    column2=value2
+WHERE condition;
+
+==> Example 
+
+UPDATE inventory SET quantity=20 WHERE id=20; 
+
+UPDATE customer_details
+SET first_name = 'Olive'
+WHERE id = 1; 
+
+UPDATE customer_details SET last_name = 'Ebong' WHERE id = 10;
+UPDATE customer_details SET email = 'davidbame@acittrainingsolutions.com' WHERE id =10;
+UPDATE employee_details set lastname='Bame' WHERE id=7;
+
+================= Data Generator ==================================================
+
+https://www.mockaroo.com
+
+==> Create a table in mockaroo to generate some data of 1000 columns
+==> Open the data in vscode
+==> include the data type
+
+==> Import the data into your database in postgresql 
+
+testdb#\i \Users\jerrybame\Downloads\person.sql 
+
+SELECT * FROM person;
+SELECT * FROM personn WHERE country_of_birth='Argentina';
+SELECT * FROM personn WHERE gender='Female';
+
+========================== SORTING DATA =====================================
+==> Sort data using ORDER BY 
+==> Data is always sorted in ascending order by default.
+
+SELECT * FROM person ORDER BY country_of_birth ASC;
+SELECT * FROM person ORDER BY country_of_birth DESC;
+SELECT * FROM person ORDER BY gender ASC;
+SELECT * FROM person ORDER BY gender DESC;
+SELECT * FROM person ORDER BY id DESC; 
+SELECT * FROM person ORDER BY first_name ASC;
+SELECT * FROM person ORDER BY first_name DESC; 
+SELECT * FROM person ORDER BY email DESC; 
+SELECT * FROM person ORDER BY id,email,country_of_birth;
+SELECT * FROM person ORDER BY date_of_birth;
+SELECT country_of_birth FROM person ORDER BY country_of_birth; 
+
+===> Knowing unique countries in a table 
+
+SELECT DISTINCT country_of_birth FROM person ORDER BY country_of_birth;
+SELECT DISTINCT country_of_birth FROM person ORDER BY country_of_birth DESC;
+
+=========================== WHERE CLAUSE ==============================================================
+
+==> WHERE clause allows us to filter data base on conditions
+
+SELECT * FROM person WHERE gender='female';
+SELECT * FROM person WHERE gender='male';
+
+==> We can also filter based on multiple conditions
+
+SELECT * FROM person WHERE gender = 'Male' AND country_of_birth = 'Cameroon';
+SELECT * FROM person WHERE gender = 'Male' AND (country_of_birth = 'Poland' OR country_of_birth = 'China');
+
+SELECT * FROM person WHERE gender = 'Male' AND (country_of_birth = 'Poland' OR country_of_birth = 'Germany') AND last_name = 'Peyto';
+
+========================================= COMPARISON OPERATORS ===========================================
+
+==> Operators allows us to perform arithmetic operations, comparisons,bitwise and logical operations
+
+SELECT 1 = 1;
+SELECT 1 = 2;
+SELECT 1 < 2; 
+SELECT 1 <= 2;
+SELECT 1 <= 1;
+SELECT 1 >= 1; 
+SELECT 1 >= 2;
+SELECT 1 <> 2;     [<> (NOT Equal to sign in postgresql) ] 
+SELECT 1 <> 1; 
+
+SELECT 'JERRYBAME' <> 'jerrybame'; 
+SELECT 'JERRYBAME' <> 'JERRYBAME';
+SELECT 'JERRYBAME' = 'JERRYBAME'; 
+
+
+================================== Limit, Offset and Fetch ==============================================
+
+===> Selecting the first 10 records in a table
+
+SELECT * FROM person LIMIT 10;
+SELECT * FROM person LIMIT 20;
+
+==> You can select data after a particular row by using the offset keyword 
+
+SELECT * FROM person OFFSET 5 LIMIT 5;
+SELECT * FROM person OFFSET 20; 
+SELECT * FROM person OFFSET 963; 
+
+===> You can select a particular number of rows only by using the FETCH keyword
+
+SELECT * FROM person OFFSET 5 FETCH FIRST 5 ROW ONLY 
+SELECT * FROM person OFFSET 100 FETCH FIRST 50 ROW ONLY; 
+SELECT * FROM person OFFSET 5 FETCH FIRST ROW ONLY; 
+
+================================= using IN to select data in a table ======================================
+
+==> Selecting everyone from China, Brazil and France
+
+SELECT * FROM person WHERE country_of_birth = 'China' OR country_of_birth = 'France' OR country_of_birth = 'Brazil';
+
+==> Use the IN keyword to improve on the above code 
+==> The IN keyword takes an array of values and then returns a query matching those values. 
+
+SELECT * FROM person WHERE country_of_birth IN ('Germany','Canada','Belgium') ORDER BY country_of_birth; 
+                                 
+								 OR
+SELECT *
+FROM person 
+WHERE country_of_birth IN ('Germany','Canada','Belgium','Nigeria','Portugal')
+ORDER BY country_of_birth;
+
+==================================== Using the BETWEEN keyword ==========================================
+
+==> Use the BETWEEN keyword to select data from a range
+==> Run the following code to find out everybody that was born between 2000 and 2015
+
+SELECT * FROM person
+WHERE date_of_birth
+BETWEEN  DATE '2000-01-01' AND '2015-01-01'
+
+==================================== LIKE/ILIKE Operator ===========================================
+
+==> The LIKE operator is used to match text values against a pattern using wildcards
+
+SELECT * FROM person WHERE email LIKE '%.com';
+
+==>To see if anybody is having an email that ends with @bloomberg.com 
+
+SELECT * FROM persom WHERE email LIKE '%@bloomberg.com';
+SELECT * FROM persom WHERE email LIKE '%@google.com';
+SELECT * FROM persom WHERE email LIKE '%@gmail.com';
+
+==> To see employees of google working in other countries 
+
+
+SELECT * FROM persom WHERE email LIKE '%@googl.%';
+
+SELECT * FROM persom WHERE email LIKE '--------@%'; 
+
+==> Find any country that starts with P
+
+SELECT * FROM person WHERE country_of_birth LIKE 'p%';
+
+==> ILIKE keyword ignores case sensitivity 
+
+SELECT * FROM person WHERE country_of_birth ILIKE 'p%';
+
+============================================= Group By ======================================================
+
+==> This allows us to group our data based on a column
+
+SELECT DISTINCT country_of_birth from person;
+
+==> Find out how many people you have for each of the countries
+
+SELECT country_of_birth,COUNT(*) FROM person GROUP BY country_of_birth ORDER BY country_of_birth;
+
+
+============================================= Having Keyword =============================================
+https://www.postgresql.org/docs/11/functions-aggregate.html
+
+==> The Having keyword works with GROUP BY and basically it allows you to perform an extra filtering after you perform the aggregation. 
+
+SELECT country_of_birth,COUNT(*) FROM person GROUP BY country_of_birth HAVING COUNT(*) >  5 ORDER BY country_of_birth;
+SELECT country_of_birth,COUNT(*) FROM person GROUP BY country_of_birth HAVING COUNT(*) >= 40 ORDER BY country_of_birth;
+SELECT country_of_birth,COUNT(*) FROM person GROUP BY country_of_birth HAVING COUNT(*) < 10 5 ORDER BY country_of_birth;
+
+==================================================== CREATING NEW TABLES =================================
+
+==> Generate a new table in mockaroo for cars. 
+==> Open car.sql in vscode
+==> import the table into postgresql 
+
+cars#\i /Users/jerrybame/Downloads/car.sql 
+
+SELECT * FROM car; 
+
+=================================================== Using Min, Max and Avg Function =============================
+
+==> Use the Max function to find out the most expensive car that you have in a table.
+
+SELECT MAX(price) FROM car; 
+SELECT MIN(price) FROM car;
+SELECT AVG(price) FROM car; 
+SELECT ROUND(AVG(price)) FROM car; 
+
+==> use the GROUP function to see the minumum car price for each make
+
+SELECT make, model, MIN(price) FROM car GROUP BY make,model;
+
+SELECT make, model, MAX(price) FROM car GROUP BY make,model;
+SELECT make, model, ROUND(AVG(price)) FROM car GROUP BY make, model; 
+
+==> Drop the model of the car 
+
+SELECT make, MIN(price) FROM car GROUP BY make;
+SELECT make, MAX(price) FROM car GROUP BY make;
+SELECT make, ROUND(AVG(price)) FROM car GROUP BY make; 
+
+SELECT make, MIN(price) FROM car GROUP BY make ORDER BY make; 
+SELECT make, MAX(price) FROM car GROUP BY make ORDER BY make; 
+
+=========================================== Working with the SUM function in postgresql ============================
+
+==> SUM function allows us to perform addition of our dataset 
+
+==> sum the total of every single car that we have in our table
+
+SELECT SUM(price) FROM car; 
+
+==> Aggregate to see the total sum of every car make 
+
+SELECT make, SUM(price) FROM car GROUP BY make ORDER BY make; 
+
+====================================== Basic of Arithmetic Operations =============================================
+
+SELECT 10 + 2;
+SELECT 10 - 2;
+SELECT 10 * 2 + 8;
+SELECT 10 /2;
+SELECT 10 10^2;
+SELECT 5!
+SELECT 10 % 3;
+SELECT 10 % 4;
+SELECT 10 % 5;
+SELECT 10 % 6; 
+
+
+====================================== Arithmetic Operations On Tables ==========================================
+
+==> Using Arithmetic operators with our data
+
+==> Select every single car from the car table 
+
+SELECT * FROM car; 
+
+==> Offer a 10% promotional discount on every car that we are selling. 
+
+SELECT id, make, mode, price, price * .10 FROM car; 
+
+==> Round the discounted price to 2 decimal places
+
+SELECT id, make, mode, price, ROUND(price * .10, 2) FROM car; 
+
+==> To get the price after the discounted price [ price - discounted price]  
+
+SELECT id, make, mode, price, ROUND(price * .10, 2), ROUND(price - (price * .10,), 2) FROM car;
+
+==> Sort the data in ascending order 
+
+SELECT id, make, mode, price, ROUND(price * .10, 2), ROUND(price - (price * .10), 2) FROM car ORDER BY make; 
+
+
+======================================================= Aliases =====================================================
+
+==> Use the alias keyword to provide a name for a column.
+==> If a name is not provided postgres will use the function name as the column name. 
+==> You can also use the alias keyword for overriding any column
+
+SELECT id, make, mode, price AS original_price, ROUND(price * .10, 2) AS ten_percent, ROUND(price - (price * .10),2) AS discount_after_10_percent FROM car; 
+
+
+=================================================== Null in postgresql================================================
+
+==> Coalesce
+==> Coalesce keyword allows us to have a default value incase the first one is not present.
+
+SELECT COALESCE(1);
+SELECT COALESCE(1) AS number; 
+
+==> When the first parameter is null, it will simply gives us the second value by default. 
+
+SELECT COALESCE(null, 10) AS number; 
+
+==> We can have multiple parameters.If the first, second and third ones are not present, it will try the 4th one.
+
+SELECT COALESCE(null, null, null, 79) AS number;
+SELECT COALESCE(null, null, null, 14, 89, 20) AS number;
+
+
+==> Using the COALESCE keyword with our person dataset
+==> Selecting persons with emails and those without emails should have a value of email not provided.
+==> If a column is null, you can use COALESCE to provide a default value. 
+ 
+
+SELECT email FROM person; 
+
+SELECT COALESCE(email, 'Email not provided') AS email FROM person;
+SELECT first_name, last_name, gender, country_of_birth, date_of_birth, COALESCE(email,'Email Not Provided') FROM person;
+
+=========================================== Division By Zero with NULLIF ==============================================
+==> If you try to divide by 0, it will return an error.
+
+SELECT 10 / 0 AS Number;
+
+==> We can tackle it with NULLIF keyword
+==> NULLIF takes 2 arguments and returns the first arguments if the second argument is not equal to the first argument.
+==> If the first argument is thesame as the second argument, the result will be null.Otherwise the result will be the 
+    first argument
+
+SELECT NULLIF(40, 40) AS Number; 
+SELECT NULLIF(40, 21) AS Number; 
+
+SELECT 10 /NULL AS Number ; 
+SELECT 20 / NULLIF(3, 5) AS Number; 
+
+SELECT COALESCE(20 / NULLIF(0, 0), 0) AS Number; 
+
+
+================================================= WORKING WITH DATES =================================================
+
+SELECT NOW();
+SELECT NOW()::DATE AS Date;
+SELECT NOW()::TIME AS Time;
+
+
+======================================== Adding and Substracting Dates With Interval ==================================
+
+SELECT NOW();
+
+==> Subtracting 1yr from now from the current time.
+
+SELECT NOW() - INTERVAL '1 YEAR';
+SELECT NOW() - INTERVAL '1 MONTH';
+SELECT NOW() - INTERVAL '11 YEARS';
+SELECT NOW() - INTERVAL '11 MONTHS;'
+SELECT NOW() - INTERVAL '11 DAYS;'
+
+
+SELECT NOW() + INTERVAL '1 YEAR';
+SELECT NOW() + INTERVAL '11 YEARS';
+SELECT NOW() + INTERVAL '11 MONTHS;'
+SELECT NOW() + INTERVAL '11 DAYS;'
+
+SELECT NOW()::DATE + INTERVAL '11 MONTHS;'
+
+==> Cast the entire statement with ::
+
+SELECT (NOW() + INTERVAL '5 MONTHS')::DATE; 
+
+
+============================================== Extracting Fields From Timestamp ========================================
+
+==> Extract a specific  value from a date
+
+SELECT NOW();
+SELECT EXTRACT(YEAR FROM NOW());
+SELECT EXTRACT(MONTH FROM NOW());
+SELECT EXTRACT(DAY FROM NOW());
+
+==> Extract Day of the week [ DOW] 
+
+SELECT EXTRACT(DOW FROM NOW());
+SELECT EXTRACT(CENTURY FROM NOW());
+
+=============================================== Working with the Age Function ===================================
+
+\d person 
+
+SELECT first_name, last_name, gender, country_of_birth, date_of_birth, COALESCE(email,'Email Not Provided') FROM person;
+
+SELECT first_name, last_name, gender, country_of_birth, date_of_birth FROM person; 
+ 
+==> Provide an additional column with actual age
+
+SELECT first_name, last_name, gender, country_of_birth, date_of_birth, AGE(NOW(),date_of_birth) AS age FROM person;
+SELECT first_name, last_name, gender, country_of_birth, date_of_birth, AGE(NOW(),date_of_birth) AS age, EXTRACT(YEAR FROM NOW()) AS Year, FROM person;
+
+
+========================================= What Are Primary Keys ==============================================
+
+==> PRIMARY KEY (PK) Uniquely identify a record in tables.
+
+======================================== Working with PRIMARY KEYS (PK) =====================================
+
+\d person 
+
+SELECT * FROM person LIMIT 1;
+
+==> Insert another person with thesame id of 1 as the first person. 
+==> Edit in vscode 
+==> It will be rejected because id 1 already exist.
+
+==> DROP the Primary key by ALTERING the table 
+
+
+ALTER TABLE person DROP CONSTRAINT person_pkey; 
+\d person 
+
+==> Now insert thesame person with thesame id 
+
+INSERT INTO person(id, first_name, last_name, email, gender, date_of_birth, country_of_birth)
+VALUES(1, 'Englebert', 'Fretter', 'efretter0@foxnews.com', 'Male', '2023-03-29', 'China'); 
+
+SELECT * FROM person WHERE id = 1; 
+
+==> IDs allows us to have a unique value that identifies a record in a given table. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
